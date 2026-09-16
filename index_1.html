@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Michaël Bordat</title>
+<meta name="description" content="Michaël Bordat — works on paper: fine art prints, vintage posters, drawings and occasional objects. Also trading on eBay as vintagepostersparis and fable_one.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#14110D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg: #14110D;
+    --surface: #1E1912;
+    --surface-line: rgba(243,238,223,0.10);
+    --ink: #F3EEDF;
+    --ink-soft: #BBA97C;
+    --accent: #D9603F;
+    --accent-2: #93A87E;
+    --accent-3: #D2A24E;
+    --line: rgba(243,238,223,0.18);
+    --focus: #F3EEDF;
+
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --display: "Bebas Neue", "Arial Narrow", sans-serif;
+    --mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  [hidden]{ display: none !important; }
+  html, body{ height: 100%; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+    padding-inline: max(20px, env(safe-area-inset-left, 0px));
+  }
+  img{ max-width: 100%; }
+  a{ color: inherit; }
+  ::selection{ background: var(--accent); color: var(--surface); }
+  :focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; }
+
+  .wrap{
+    max-width: 720px;
+    margin-inline: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- top bar (hidden on home, shown on inner pages) ---- */
+  .topbar{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 22px 10px;
+    flex-wrap: wrap;
+  }
+  .topbar[hidden]{ display: none; }
+  .wordmark{
+    font-family: var(--display);
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .crumbs{
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  main{ flex: 1; display: flex; flex-direction: column; justify-content: flex-start; padding-block: 32px 48px; }
+  .screen[hidden]{ display: none; }
+  .brand{
+    font-family: var(--display);
+    line-height: 0.86;
+    font-size: clamp(3.4rem, 15vw, 6.2rem);
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+    margin: 0;
+  }
+  .tagline{
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: clamp(1rem, 2.6vw, 1.15rem);
+    margin: 14px 0 0;
+    max-width: 46ch;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 10px;
+  }
+
+  nav.links{
+    margin-top: 44px;
+    border-top: 1px solid var(--line);
+  }
+  nav.links a{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 2px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    transition: padding-left 0.18s ease, color 0.18s ease;
+  }
+  nav.links a:hover, nav.links a:focus-visible{
+    padding-left: 10px;
+    color: var(--accent);
+  }
+  nav.links .label{
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 5vw, 2.1rem);
+    letter-spacing: 0.02em;
+  }
+  nav.links .hint{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  nav.links .row{
+    padding: 20px 2px;
+    border-bottom: 1px solid var(--line);
+  }
+  nav.links .row-trigger{
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    transition: padding-left 0.18s ease, color 0.18s ease;
+  }
+  nav.links .row-trigger:hover, nav.links .row-trigger:focus-visible{
+    padding-left: 10px;
+    color: var(--accent);
+  }
+  nav.links .row-trigger[hidden]{ display: none; }
+  nav.links .row form{ margin-top: 4px; }
+  nav.links .row .ok-msg, nav.links .row .err-msg{ margin: 4px 0 0; }
+
+  .home-foot{
+    margin-top: 40px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+  }
+  .home-foot a{ color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+  .home-foot a:hover{ color: var(--accent); }
+
+  /* ---- inner pages ---- */
+  h1.page-title{
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
+    letter-spacing: 0.01em;
+    margin: 0 0 6px;
+  }
+  .lede{
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    max-width: 56ch;
+    margin: 0 0 28px;
+  }
+
+  .panel{
+    background: var(--surface);
+    border: 1px solid var(--surface-line);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    background: var(--accent);
+    color: var(--surface);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 13px 20px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .btn:hover, .btn:focus-visible{ opacity: 0.86; }
+  .btn::after{ content: "→"; font-family: var(--mono); }
+  .btn-alt{ background: var(--accent-2); }
+  .btn-alt::after{ content: none; }
+  .btn-alt2{ background: var(--accent-3); }
+  .btn-sm{ padding: 11px 16px; font-size: 0.72rem; }
+  .btn[disabled]{ opacity: 0.6; cursor: default; }
+
+  .btn-row{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+
+  .reveal{
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+  .reveal[hidden]{ display: none; }
+  .reveal a{ color: var(--accent-2); text-decoration: underline; text-underline-offset: 3px; }
+
+  .also-known{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .also-known b{ color: var(--ink); font-weight: 500; }
+
+  .field-row{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .field-row input{
+    flex: 1 1 220px;
+    min-width: 0;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    padding: 12px 14px;
+  }
+  .field-row input::placeholder{ color: var(--ink-soft); }
+
+  .note{
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .ok-msg{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent-2);
+  }
+  .ok-msg[hidden]{ display: none; }
+  .err-msg{
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+  }
+  .err-msg[hidden]{ display: none; }
+
+  footer.site{
+    padding-block: 18px calc(22px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  footer.site a{ color: var(--ink-soft); }
+  footer.site a:hover{ color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce){
+    nav.links a, .btn{ transition: none; }
+  }
+
+  /* ---- mobile: centered; desktop keeps the top-left default above ---- */
+  @media (max-width: 640px){
+    .wrap{ text-align: center; }
+    main{ justify-content: center; }
+
+    .topbar{ flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+
+    nav.links a{ flex-direction: column; align-items: center; gap: 4px; }
+
+    .btn-row{ justify-content: center; }
+    .field-row{ justify-content: center; }
+    .panel{ align-items: center; }
+
+    footer.site{ flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar" id="topbar" hidden>
+    <a class="wordmark" href="#/">Michaël Bordat</a>
+    <span class="crumbs" id="crumbs"></span>
+  </div>
+
+  <main>
+
+    <section class="screen" id="home">
+      <p class="eyebrow">Paris, France</p>
+      <h1 class="brand">MICHAËL<br>BORDAT</h1>
+      <p class="tagline">Works on paper — fine art prints, vintage posters, drawings, occasional objects.</p>
+
+      <nav class="links">
+        <a href="#/vintage-prints"><span class="label">Inventory</span></a>
+        <a href="#/wholesale"><span class="label">Wholesale &amp; Sourcing</span><span class="hint">Trade &amp; sourcing enquiries</span></a>
+        <div class="row" id="nl-row">
+          <button type="button" class="row-trigger" id="nl-trigger"><span class="label">Newsletter</span><span class="hint">New arrivals, occasionally</span></button>
+          <form id="nl-inline-form" hidden>
+            <input type="hidden" name="_subject" value="Newsletter signup — michaelbordat.com">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+            <div class="field-row">
+              <input type="email" id="nl-inline-email" name="email" placeholder="you@email.com" required aria-label="Your email address">
+              <button class="btn btn-sm" type="submit">Join</button>
+            </div>
+          </form>
+          <p class="ok-msg" id="nl-inline-ok" hidden>Thank you, your email address will be added to the newsletter shortly.</p>
+          <p class="err-msg" id="nl-inline-err" hidden>Something went wrong — please try again, or email classeurpapiers@gmail.com directly.</p>
+        </div>
+      </nav>
+
+      <div class="btn-row">
+        <a class="btn btn-sm" href="mailto:michaelbordat@gmail.com?subject=Vintage%20posters%20—%20inquiry">Email</a>
+        <button class="btn btn-alt btn-sm" type="button" id="wa-btn">WhatsApp</button>
+        <a class="btn btn-alt2 btn-sm" href="https://www.instagram.com/michaelbordat/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="reveal" id="wa-number" hidden>+33 6 24 04 03 13 — <a href="https://wa.me/33624040313" target="_blank" rel="noopener">open chat</a></p>
+
+      <p class="home-foot">Also trading on eBay as <a href="https://www.ebay.fr/str/vintagepostersparis" target="_blank" rel="noopener">vintagepostersparis</a> // fable_one.</p>
+    </section>
+
+    <section class="screen" id="vintage-prints" hidden>
+      <h1 class="page-title">Inventory</h1>
+      <p class="lede">While I build a proper shop page here, you can find my full inventory on eBay.</p>
+
+      <div class="panel">
+        <p class="also-known">Shop name — <b>vintagepostersparis</b><br>Username — <b>fable_one</b></p>
+        <a class="btn" href="https://www.ebay.fr/str/vintagepostersparis" target="_blank" rel="noopener">View the eBay shop</a>
+      </div>
+
+    </section>
+
+    <section class="screen" id="wholesale" hidden>
+      <h1 class="page-title">Wholesale &amp; Sourcing</h1>
+      <p class="lede">Two ways to work with me beyond single-piece sales.</p>
+      <div class="panel">
+        <p style="margin:0; font-size:0.98rem;"><b>Wholesale</b> — for other dealers, decorators, and interior architects buying in volume, I'm happy to offer favorable terms.</p>
+        <p style="margin:0; font-size:0.98rem;"><b>Sourcing</b> — I also take on sourcing work, having researched and sourced artworks on behalf of museums, private collectors, hotels, interior architects and decorators.</p>
+        <a class="btn" href="mailto:michaelbordat@gmail.com?subject=Wholesale%2FSourcing%20inquiry">Wholesale/Sourcing Inquiry</a>
+      </div>
+    </section>
+
+    <section class="screen" id="newsletter" hidden>
+      <h1 class="page-title">Newsletter</h1>
+      <p class="lede">Occasional notes when something worth seeing comes in.</p>
+      <div class="panel">
+        <form id="nl-form" action="https://formsubmit.co/classeurpapiers@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Newsletter signup — michaelbordat.com">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="field-row">
+            <input type="email" id="nl-email" name="email" placeholder="you@email.com" required aria-label="Your email address">
+            <button class="btn" type="submit">Join</button>
+          </div>
+        </form>
+        <p class="ok-msg" id="nl-ok" hidden>Thank you, your email address will be added to the newsletter shortly.</p>
+        <p class="err-msg" id="nl-err" hidden>Something went wrong — please try again, or email classeurpapiers@gmail.com directly.</p>
+        <p class="note" id="nl-note">Unsubscribe any time, just as informally.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site">
+    <span>© Michaël Bordat</span>
+    <span><a href="https://www.ebay.fr/str/vintagepostersparis" target="_blank" rel="noopener">ebay.fr/str/vintagepostersparis</a></span>
+  </footer>
+
+</div>
+
+<script>
+  var SCREENS = {
+    "": { id: "home", title: "Michaël Bordat", crumb: "" },
+    "/": { id: "home", title: "Michaël Bordat", crumb: "" },
+    "/vintage-prints": { id: "vintage-prints", title: "Inventory — Michaël Bordat", crumb: "Inventory" },
+    "/wholesale": { id: "wholesale", title: "Wholesale & Sourcing — Michaël Bordat", crumb: "Wholesale & Sourcing" },
+    "/newsletter": { id: "newsletter", title: "Newsletter — Michaël Bordat", crumb: "Newsletter" }
+  };
+
+  function currentPath(){
+    var h = location.hash.replace(/^#/, "");
+    return SCREENS[h] ? h : "/";
+  }
+
+  function render(){
+    var path = currentPath();
+    var route = SCREENS[path];
+    document.querySelectorAll(".screen").forEach(function(s){
+      s.hidden = (s.id !== route.id);
+    });
+    document.title = route.title;
+    document.querySelector(".wrap").setAttribute("data-page", route.id);
+    var topbar = document.getElementById("topbar");
+    var crumbs = document.getElementById("crumbs");
+    if(route.id === "home"){
+      topbar.hidden = true;
+    } else {
+      topbar.hidden = false;
+      crumbs.textContent = route.crumb;
+    }
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener("hashchange", render);
+  render();
+
+  document.getElementById("wa-btn").addEventListener("click", function(){
+    document.getElementById("wa-number").hidden = false;
+  });
+
+  document.getElementById("nl-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var form = e.target;
+    var email = document.getElementById("nl-email").value.trim();
+    if(!email) return;
+
+    var submitBtn = form.querySelector("button[type=submit]");
+    submitBtn.disabled = true;
+    document.getElementById("nl-err").hidden = true;
+
+    fetch("https://formsubmit.co/ajax/classeurpapiers@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ email: email, _subject: "Newsletter signup — michaelbordat.com" })
+    })
+      .then(function(res){
+        if(!res.ok) throw new Error("bad response");
+        form.hidden = true;
+        document.getElementById("nl-ok").hidden = false;
+      })
+      .catch(function(){
+        submitBtn.disabled = false;
+        document.getElementById("nl-err").hidden = false;
+      });
+  });
+
+  document.getElementById("nl-trigger").addEventListener("click", function(){
+    document.getElementById("nl-trigger").hidden = true;
+    document.getElementById("nl-inline-form").hidden = false;
+    document.getElementById("nl-inline-email").focus();
+  });
+
+  document.getElementById("nl-inline-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var form = e.target;
+    var email = document.getElementById("nl-inline-email").value.trim();
+    if(!email) return;
+
+    var submitBtn = form.querySelector("button[type=submit]");
+    submitBtn.disabled = true;
+    document.getElementById("nl-inline-err").hidden = true;
+
+    fetch("https://formsubmit.co/ajax/classeurpapiers@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ email: email, _subject: "Newsletter signup — michaelbordat.com" })
+    })
+      .then(function(res){
+        if(!res.ok) throw new Error("bad response");
+        form.hidden = true;
+        document.getElementById("nl-inline-ok").hidden = false;
+      })
+      .catch(function(){
+        submitBtn.disabled = false;
+        document.getElementById("nl-inline-err").hidden = false;
+      });
+  });
+</script>
+
+</body>
+</html>
